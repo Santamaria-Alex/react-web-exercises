@@ -15,6 +15,11 @@ const Expenses = (props) => {
         setFilteredYear(selectedYear);
     }
 
+    // this function returns a new array list based on whether the expense date matches the filtered date.
+    const filteredExpenses = props.items.filter(expense => {
+        return expense.date.getFullYear().toString() === filteredYear;
+    })
+
     return (
         <div>
             <Card className='expenses'>
@@ -23,8 +28,11 @@ const Expenses = (props) => {
                 <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler}/>
 
                 {/*this is how to dynamically add info kind of like forEach*/}
-                {props.items.map(expense =>
+                {filteredExpenses.map(expense =>
                     <ExpenseItem
+                        // we need a key for each item to prevent bugs
+                        // when maping (.map) list of items, a key is necessary.
+                        key={expense.id}
                         title={expense.title}
                         amount={expense.amount}
                         date={expense.date}/>)}
