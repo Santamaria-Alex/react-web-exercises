@@ -2,10 +2,10 @@
 import React, {useState} from "react";
 
 import './Expenses.css'
-import ExpenseItem from "./ExpenseItem";
 import Card from "../UI/Card";
 import './ExpensesFilter';
 import ExpensesFilter from "./ExpensesFilter";
+import ExpensesList from "./ExpensesList";
 
 const Expenses = (props) => {
 
@@ -20,23 +20,14 @@ const Expenses = (props) => {
         return expense.date.getFullYear().toString() === filteredYear;
     })
 
+
     return (
         <div>
             <Card className='expenses'>
                 {/*onChangeFilter is called in ExpensesFilter.js
                 which is getting the target.value*/}
                 <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler}/>
-
-                {/*this is how to dynamically add info kind of like forEach*/}
-                {filteredExpenses.map(expense =>
-                    <ExpenseItem
-                        // we need a key for each item to prevent bugs
-                        // when maping (.map) list of items, a key is necessary.
-                        key={expense.id}
-                        title={expense.title}
-                        amount={expense.amount}
-                        date={expense.date}/>)}
-
+                <ExpensesList items={filteredExpenses}/>
             </Card>
         </div>
 
